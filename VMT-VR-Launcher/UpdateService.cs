@@ -152,12 +152,10 @@ namespace VMT_VR_Launcher
         /// Performs the full update process with StreamingAssets preservation.
         /// 
         /// Mechanism:
-        /// 1. Backup entire StreamingAssets folder to temp
-        /// 2. Delete BuildInfo.json from backup (we want the new one from zip)
-        /// 3. Extract zip into build directory (overwrites everything)
-        /// 4. Restore old StreamingAssets files that are NOT in the new extraction
-        ///    (preserves DataSave, images, configs, etc.)
-        /// 5. Cleanup temp backup
+        /// 1. Backup DataSave folder and NetworkData.json to temp
+        /// 2. Extract zip into build directory (overwrites everything)
+        /// 3. Restore DataSave and NetworkData.json to new StreamingAssets
+        /// 4. Cleanup temp backup
         /// </summary>
         public static async Task PerformUpdateAsync(
             string zipPath,
@@ -192,14 +190,20 @@ namespace VMT_VR_Launcher
             if (saPath != null && Directory.Exists(saPath))
             {
                 hasExistingStreamingAssets = true;
-                await Task.Run(() => CopyDirectory(saPath, tempBackupPath), cancellationToken);
+                Directory.CreateDirectory(tempBackupPath);
 
-                // Delete BuildInfo.json from backup (we want the new one)
-                string backupBuildInfo = Path.Combine(tempBackupPath, "BuildInfo.json");
-                if (File.Exists(backupBuildInfo))
+                string oldDataSave = Path.Combine(saPath, "DataSave");
+                string tempDataSave = Path.Combine(tempBackupPath, "DataSave");
+                if (Directory.Exists(oldDataSave))
                 {
-                    File.Delete(backupBuildInfo);
-                    Debug.WriteLine("[UpdateService] Removed BuildInfo.json from backup (will use new version)");
+                    await Task.Run(() => CopyDirectory(oldDataSave, tempDataSave), cancellationToken);
+                }
+
+                string oldNetworkData = Path.Combine(saPath, "NetworkData.json");
+                string tempNetworkData = Path.Combine(tempBackupPath, "NetworkData.json");
+                if (File.Exists(oldNetworkData))
+                {
+                    File.Copy(oldNetworkData, tempNetworkData, true);
                 }
             }
 

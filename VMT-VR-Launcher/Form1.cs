@@ -262,6 +262,33 @@ namespace VMT_VR_Launcher
                 lblApiValue.ForeColor = Color.Gray;
             }
 
+            // Load Custom Weapons (.vmt) Count
+            try
+            {
+                string? saPath = UpdateService.FindStreamingAssetsPath(buildPath);
+                if (!string.IsNullOrEmpty(saPath))
+                {
+                    string dataSave = Path.Combine(saPath, "DataSave");
+                    if (Directory.Exists(dataSave))
+                    {
+                        int vmtCount = Directory.GetFiles(dataSave, "*.vmt", SearchOption.AllDirectories).Length;
+                        lblVmtCountValue.Text = $"{vmtCount} Files";
+                    }
+                    else
+                    {
+                        lblVmtCountValue.Text = "0 Files";
+                    }
+                }
+                else
+                {
+                    lblVmtCountValue.Text = "—";
+                }
+            }
+            catch
+            {
+                lblVmtCountValue.Text = "Error";
+            }
+
             UpdateButtonStates();
         }
 

@@ -26,6 +26,8 @@ namespace VMT_VR_Launcher
             txtZipPath = new AntdUI.Input();
             lblZipPathLabel = new AntdUI.Label();
             lblBuildDateValue = new AntdUI.Label();
+            lblVmtCountValue = new AntdUI.Label();
+            lblVmtCountLabel = new AntdUI.Label();
             lblVersionValue = new AntdUI.Label();
             lblGameNameValue = new AntdUI.Label();
             lblBuildDateLabel = new AntdUI.Label();
@@ -138,6 +140,22 @@ namespace VMT_VR_Launcher
             lblBuildDateValue.Size = new Size(280, 20);
             lblBuildDateValue.TabIndex = 5;
             lblBuildDateValue.Text = "—";
+            // 
+            // lblVmtCountValue
+            // 
+            lblVmtCountValue.Location = new Point(100, 116);
+            lblVmtCountValue.Name = "lblVmtCountValue";
+            lblVmtCountValue.Size = new Size(280, 20);
+            lblVmtCountValue.TabIndex = 7;
+            lblVmtCountValue.Text = "—";
+            // 
+            // lblVmtCountLabel
+            // 
+            lblVmtCountLabel.Location = new Point(16, 116);
+            lblVmtCountLabel.Name = "lblVmtCountLabel";
+            lblVmtCountLabel.Size = new Size(80, 20);
+            lblVmtCountLabel.TabIndex = 6;
+            lblVmtCountLabel.Text = "VMT Files";
             // 
             // lblVersionValue
             // 
@@ -355,6 +373,8 @@ namespace VMT_VR_Launcher
             // panelInfo
             // 
             panelInfo.BorderWidth = 1F;
+            panelInfo.Controls.Add(lblVmtCountValue);
+            panelInfo.Controls.Add(lblVmtCountLabel);
             panelInfo.Controls.Add(lblBuildDateValue);
             panelInfo.Controls.Add(lblVersionValue);
             panelInfo.Controls.Add(lblGameNameValue);
@@ -436,6 +456,8 @@ namespace VMT_VR_Launcher
         private AntdUI.Label lblBuildDateLabel;
         private AntdUI.Label lblVersionLabel;
         private AntdUI.Label lblGameNameLabel;
+        private AntdUI.Label lblVmtCountValue;
+        private AntdUI.Label lblVmtCountLabel;
         private AntdUI.Panel panelNetwork;
         private AntdUI.Label lblNetworkTitle;
         private AntdUI.Label lblApiValue;
