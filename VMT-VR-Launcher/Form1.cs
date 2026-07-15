@@ -3,7 +3,7 @@ using VMT_VR_Launcher.Models;
 
 namespace VMT_VR_Launcher
 {
-    public partial class Form1 : Form
+    public partial class Form1 : AntdUI.Window
     {
         // ─── State ───────────────────────────────────────────────────
         private AppSettings _settings = null!;
@@ -18,6 +18,7 @@ namespace VMT_VR_Launcher
 
         public Form1()
         {
+            AntdUI.Config.IsDark = true;
             InitializeComponent();
             LoadSettings();
             WireEvents();
@@ -92,8 +93,8 @@ namespace VMT_VR_Launcher
         {
             using var dialog = new OpenFileDialog
             {
-                Title = "Select Update Package (.zip)",
-                Filter = "ZIP files (*.zip)|*.zip|All files (*.*)|*.*",
+                Title = "Select Update Package (.zip/.rar/.7z)",
+                Filter = "Archive files (*.zip;*.rar;*.7z)|*.zip;*.rar;*.7z|All files (*.*)|*.*",
                 FilterIndex = 1,
             };
 
@@ -162,8 +163,7 @@ namespace VMT_VR_Launcher
             _updateCts = new CancellationTokenSource();
             var progress = new Progress<UpdateProgress>(p =>
             {
-                progressBar.Value = p.Percentage;
-                progressBar.StatusText = p.Status;
+                progressBar.Value = p.Percentage / 100f;
                 lblStatus.Text = p.Status;
             });
 
@@ -202,13 +202,12 @@ namespace VMT_VR_Launcher
             // Flash effect to indicate refresh happened
             lblStatus.Visible = true;
             lblStatus.Text = "🔄  Data refreshed";
-            lblStatus.ForeColor = ThemeColors.AccentGreen;
+            lblStatus.ForeColor = Color.LimeGreen;
 
             var timer = new System.Windows.Forms.Timer { Interval = 2000 };
             timer.Tick += (_, _) =>
             {
                 lblStatus.Visible = false;
-                lblStatus.ForeColor = ThemeColors.TextSecondary;
                 timer.Stop();
                 timer.Dispose();
             };
@@ -229,14 +228,14 @@ namespace VMT_VR_Launcher
                 lblGameNameValue.Text = _buildInfo.GameName;
                 lblVersionValue.Text = $"v{_buildInfo.Version}";
                 lblBuildDateValue.Text = _buildInfo.BuildDate;
-                lblGameName.Text = _buildInfo.GameName;
+                windowBar.Text = $"VR Launcher - {_buildInfo.GameName}";
             }
             else
             {
                 lblGameNameValue.Text = "—";
                 lblVersionValue.Text = "—";
                 lblBuildDateValue.Text = "—";
-                lblGameName.Text = "";
+                windowBar.Text = "VR Launcher";
             }
 
             // Load Network Data
@@ -247,9 +246,9 @@ namespace VMT_VR_Launcher
                 lblServerValue.Text = _networkData.Server;
                 lblPortValue.Text = _networkData.Port;
                 lblDebugValue.Text = _networkData.IsDebug ? "✓  Enabled" : "✗  Disabled";
-                lblDebugValue.ForeColor = _networkData.IsDebug ? ThemeColors.AccentOrange : ThemeColors.TextMuted;
+                lblDebugValue.ForeColor = _networkData.IsDebug ? Color.Orange : Color.Gray;
                 lblApiValue.Text = _networkData.IsAPI ? "✓  Enabled" : "✗  Disabled";
-                lblApiValue.ForeColor = _networkData.IsAPI ? ThemeColors.AccentGreen : ThemeColors.TextMuted;
+                lblApiValue.ForeColor = _networkData.IsAPI ? Color.LimeGreen : Color.Gray;
             }
             else
             {
@@ -257,9 +256,9 @@ namespace VMT_VR_Launcher
                 lblServerValue.Text = "—";
                 lblPortValue.Text = "—";
                 lblDebugValue.Text = "—";
-                lblDebugValue.ForeColor = ThemeColors.TextMuted;
+                lblDebugValue.ForeColor = Color.Gray;
                 lblApiValue.Text = "—";
-                lblApiValue.ForeColor = ThemeColors.TextMuted;
+                lblApiValue.ForeColor = Color.Gray;
             }
 
             UpdateButtonStates();
@@ -348,12 +347,10 @@ namespace VMT_VR_Launcher
             if (updating)
             {
                 btnUpdate.Text = "UPDATING...";
-                btnUpdate.Icon = "⏳";
             }
             else
             {
                 btnUpdate.Text = "UPDATE BUILD";
-                btnUpdate.Icon = "⬆";
                 UpdateButtonStates();
             }
         }

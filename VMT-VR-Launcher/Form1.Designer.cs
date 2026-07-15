@@ -1,20 +1,9 @@
-#nullable enable
-using System.Drawing.Drawing2D;
-using VMT_VR_Launcher.Controls;
-
 namespace VMT_VR_Launcher
 {
     partial class Form1
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer? components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -26,466 +15,443 @@ namespace VMT_VR_Launcher
 
         #region Windows Form Designer generated code
 
-        // ─── Header ──────────────────────────────────────────────────
-        private Panel pnlHeader = null!;
-        private Label lblTitle = null!;
-        private Label lblSubtitle = null!;
-        private Label lblGameName = null!;
-
-        // ─── Left Column: Configuration & Update ─────────────────────
-        private ThemedPanel pnlConfig = null!;
-        private Label lblConfigTitle = null!;
-        private Label lblBuildPathLabel = null!;
-        private TextBox txtBuildPath = null!;
-        private ThemedButton btnBrowseBuild = null!;
-
-        private ThemedPanel pnlUpdate = null!;
-        private Label lblUpdateTitle = null!;
-        private Label lblZipPathLabel = null!;
-        private TextBox txtZipPath = null!;
-        private ThemedButton btnBrowseZip = null!;
-        private ThemedButton btnUpdate = null!;
-
-        // ─── Right Column: Build Info & Network Data ─────────────────
-        private ThemedPanel pnlBuildInfo = null!;
-        private Label lblBuildInfoTitle = null!;
-        private Label lblGameNameLabel = null!;
-        private Label lblGameNameValue = null!;
-        private Label lblVersionLabel = null!;
-        private Label lblVersionValue = null!;
-        private Label lblBuildDateLabel = null!;
-        private Label lblBuildDateValue = null!;
-
-        private ThemedPanel pnlNetworkData = null!;
-        private Label lblNetworkTitle = null!;
-        private Label lblDbUrlLabel = null!;
-        private Label lblDbUrlValue = null!;
-        private Label lblServerLabel = null!;
-        private Label lblServerValue = null!;
-        private Label lblPortLabel = null!;
-        private Label lblPortValue = null!;
-        private Label lblDebugLabel = null!;
-        private Label lblDebugValue = null!;
-        private Label lblApiLabel = null!;
-        private Label lblApiValue = null!;
-
-        // ─── Bottom: Progress & Actions ──────────────────────────────
-        private ThemedProgressBar progressBar = null!;
-        private Label lblStatus = null!;
-        private Panel pnlActions = null!;
-        private ThemedButton btnRefresh = null!;
-        private ThemedButton btnOpenFolder = null!;
-        private ThemedButton btnLaunchApp = null!;
-
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            windowBar = new AntdUI.WindowBar();
+            btnBrowseBuild = new AntdUI.Button();
+            txtBuildPath = new AntdUI.Input();
+            lblBuildPathLabel = new AntdUI.Label();
+            btnUpdate = new AntdUI.Button();
+            btnBrowseZip = new AntdUI.Button();
+            txtZipPath = new AntdUI.Input();
+            lblZipPathLabel = new AntdUI.Label();
+            lblBuildDateValue = new AntdUI.Label();
+            lblVersionValue = new AntdUI.Label();
+            lblGameNameValue = new AntdUI.Label();
+            lblBuildDateLabel = new AntdUI.Label();
+            lblVersionLabel = new AntdUI.Label();
+            lblGameNameLabel = new AntdUI.Label();
+            lblBuildInfoTitle = new AntdUI.Label();
+            lblApiValue = new AntdUI.Label();
+            lblDebugValue = new AntdUI.Label();
+            lblPortValue = new AntdUI.Label();
+            lblServerValue = new AntdUI.Label();
+            lblDbUrlValue = new AntdUI.Label();
+            lblApiLabel = new AntdUI.Label();
+            lblDebugLabel = new AntdUI.Label();
+            lblPortLabel = new AntdUI.Label();
+            lblServerLabel = new AntdUI.Label();
+            lblDbUrlLabel = new AntdUI.Label();
+            lblNetworkTitle = new AntdUI.Label();
+            progressBar = new AntdUI.Progress();
+            lblStatus = new AntdUI.Label();
+            btnRefresh = new AntdUI.Button();
+            btnOpenFolder = new AntdUI.Button();
+            btnLaunchApp = new AntdUI.Button();
+            panelConfig = new AntdUI.Panel();
+            panelUpdate = new AntdUI.Panel();
+            panelInfo = new AntdUI.Panel();
+            panelNetwork = new AntdUI.Panel();
+            panelConfig.SuspendLayout();
+            panelUpdate.SuspendLayout();
+            panelInfo.SuspendLayout();
+            panelNetwork.SuspendLayout();
             SuspendLayout();
-
-            // ═══════════════════════════════════════════════════════════
-            //  FORM SETTINGS
-            // ═══════════════════════════════════════════════════════════
-            AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(900, 620);
-            Text = "VMT VR Launcher";
-            StartPosition = FormStartPosition.CenterScreen;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            // 
+            // windowBar
+            // 
+            windowBar.Dock = DockStyle.Top;
+            windowBar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            windowBar.Icon = Properties.Resources.app;
+            windowBar.Location = new Point(0, 0);
+            windowBar.MaximizeBox = false;
+            windowBar.Name = "windowBar";
+            windowBar.Size = new Size(884, 40);
+            windowBar.TabIndex = 0;
+            windowBar.Text = "VR Launcher";
+            // 
+            // btnBrowseBuild
+            // 
+            btnBrowseBuild.Location = new Point(324, 46);
+            btnBrowseBuild.Name = "btnBrowseBuild";
+            btnBrowseBuild.Size = new Size(80, 36);
+            btnBrowseBuild.TabIndex = 2;
+            btnBrowseBuild.Text = "Browse";
+            btnBrowseBuild.Type = AntdUI.TTypeMini.Primary;
+            // 
+            // txtBuildPath
+            // 
+            txtBuildPath.Location = new Point(16, 46);
+            txtBuildPath.Name = "txtBuildPath";
+            txtBuildPath.ReadOnly = true;
+            txtBuildPath.Size = new Size(300, 36);
+            txtBuildPath.TabIndex = 1;
+            // 
+            // lblBuildPathLabel
+            // 
+            lblBuildPathLabel.Location = new Point(16, 16);
+            lblBuildPathLabel.Name = "lblBuildPathLabel";
+            lblBuildPathLabel.Size = new Size(120, 24);
+            lblBuildPathLabel.TabIndex = 0;
+            lblBuildPathLabel.Text = "Build Directory";
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.Enabled = false;
+            btnUpdate.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnUpdate.Location = new Point(16, 113);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(388, 36);
+            btnUpdate.TabIndex = 3;
+            btnUpdate.Text = "UPDATE BUILD";
+            btnUpdate.Type = AntdUI.TTypeMini.Primary;
+            // 
+            // btnBrowseZip
+            // 
+            btnBrowseZip.Location = new Point(324, 46);
+            btnBrowseZip.Name = "btnBrowseZip";
+            btnBrowseZip.Size = new Size(80, 36);
+            btnBrowseZip.TabIndex = 2;
+            btnBrowseZip.Text = "Browse";
+            btnBrowseZip.Type = AntdUI.TTypeMini.Primary;
+            // 
+            // txtZipPath
+            // 
+            txtZipPath.Location = new Point(16, 46);
+            txtZipPath.Name = "txtZipPath";
+            txtZipPath.ReadOnly = true;
+            txtZipPath.Size = new Size(300, 36);
+            txtZipPath.TabIndex = 1;
+            // 
+            // lblZipPathLabel
+            // 
+            lblZipPathLabel.Location = new Point(16, 16);
+            lblZipPathLabel.Name = "lblZipPathLabel";
+            lblZipPathLabel.Size = new Size(200, 24);
+            lblZipPathLabel.TabIndex = 0;
+            lblZipPathLabel.Text = "Select Update Package (.zip/.rar/.7z)";
+            // 
+            // lblBuildDateValue
+            // 
+            lblBuildDateValue.Location = new Point(100, 92);
+            lblBuildDateValue.Name = "lblBuildDateValue";
+            lblBuildDateValue.Size = new Size(280, 20);
+            lblBuildDateValue.TabIndex = 5;
+            lblBuildDateValue.Text = "—";
+            // 
+            // lblVersionValue
+            // 
+            lblVersionValue.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblVersionValue.Fore = Color.LimeGreen;
+            lblVersionValue.ForeColor = Color.LimeGreen;
+            lblVersionValue.Location = new Point(100, 68);
+            lblVersionValue.Name = "lblVersionValue";
+            lblVersionValue.Size = new Size(280, 20);
+            lblVersionValue.TabIndex = 3;
+            lblVersionValue.Text = "—";
+            // 
+            // lblGameNameValue
+            // 
+            lblGameNameValue.Location = new Point(100, 44);
+            lblGameNameValue.Name = "lblGameNameValue";
+            lblGameNameValue.Size = new Size(280, 20);
+            lblGameNameValue.TabIndex = 1;
+            lblGameNameValue.Text = "—";
+            // 
+            // lblBuildDateLabel
+            // 
+            lblBuildDateLabel.Location = new Point(16, 92);
+            lblBuildDateLabel.Name = "lblBuildDateLabel";
+            lblBuildDateLabel.Size = new Size(80, 20);
+            lblBuildDateLabel.TabIndex = 4;
+            lblBuildDateLabel.Text = "Build Date";
+            // 
+            // lblVersionLabel
+            // 
+            lblVersionLabel.Location = new Point(16, 68);
+            lblVersionLabel.Name = "lblVersionLabel";
+            lblVersionLabel.Size = new Size(80, 20);
+            lblVersionLabel.TabIndex = 2;
+            lblVersionLabel.Text = "Version";
+            // 
+            // lblGameNameLabel
+            // 
+            lblGameNameLabel.Location = new Point(16, 44);
+            lblGameNameLabel.Name = "lblGameNameLabel";
+            lblGameNameLabel.Size = new Size(80, 20);
+            lblGameNameLabel.TabIndex = 0;
+            lblGameNameLabel.Text = "Game Name";
+            // 
+            // lblBuildInfoTitle
+            // 
+            lblBuildInfoTitle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblBuildInfoTitle.Location = new Point(16, 12);
+            lblBuildInfoTitle.Name = "lblBuildInfoTitle";
+            lblBuildInfoTitle.Size = new Size(200, 24);
+            lblBuildInfoTitle.TabIndex = 6;
+            lblBuildInfoTitle.Text = "BUILD INFORMATION";
+            // 
+            // lblApiValue
+            // 
+            lblApiValue.Location = new Point(100, 140);
+            lblApiValue.Name = "lblApiValue";
+            lblApiValue.Size = new Size(280, 20);
+            lblApiValue.TabIndex = 9;
+            lblApiValue.Text = "—";
+            // 
+            // lblDebugValue
+            // 
+            lblDebugValue.Location = new Point(100, 116);
+            lblDebugValue.Name = "lblDebugValue";
+            lblDebugValue.Size = new Size(280, 20);
+            lblDebugValue.TabIndex = 8;
+            lblDebugValue.Text = "—";
+            // 
+            // lblPortValue
+            // 
+            lblPortValue.Location = new Point(100, 92);
+            lblPortValue.Name = "lblPortValue";
+            lblPortValue.Size = new Size(280, 20);
+            lblPortValue.TabIndex = 7;
+            lblPortValue.Text = "—";
+            // 
+            // lblServerValue
+            // 
+            lblServerValue.Location = new Point(100, 68);
+            lblServerValue.Name = "lblServerValue";
+            lblServerValue.Size = new Size(280, 20);
+            lblServerValue.TabIndex = 6;
+            lblServerValue.Text = "—";
+            // 
+            // lblDbUrlValue
+            // 
+            lblDbUrlValue.Location = new Point(100, 44);
+            lblDbUrlValue.Name = "lblDbUrlValue";
+            lblDbUrlValue.Size = new Size(280, 20);
+            lblDbUrlValue.TabIndex = 5;
+            lblDbUrlValue.Text = "—";
+            // 
+            // lblApiLabel
+            // 
+            lblApiLabel.Location = new Point(16, 140);
+            lblApiLabel.Name = "lblApiLabel";
+            lblApiLabel.Size = new Size(80, 20);
+            lblApiLabel.TabIndex = 4;
+            lblApiLabel.Text = "API Mode";
+            // 
+            // lblDebugLabel
+            // 
+            lblDebugLabel.Location = new Point(16, 116);
+            lblDebugLabel.Name = "lblDebugLabel";
+            lblDebugLabel.Size = new Size(80, 20);
+            lblDebugLabel.TabIndex = 3;
+            lblDebugLabel.Text = "Debug";
+            // 
+            // lblPortLabel
+            // 
+            lblPortLabel.Location = new Point(16, 92);
+            lblPortLabel.Name = "lblPortLabel";
+            lblPortLabel.Size = new Size(80, 20);
+            lblPortLabel.TabIndex = 2;
+            lblPortLabel.Text = "Port";
+            // 
+            // lblServerLabel
+            // 
+            lblServerLabel.Location = new Point(16, 68);
+            lblServerLabel.Name = "lblServerLabel";
+            lblServerLabel.Size = new Size(80, 20);
+            lblServerLabel.TabIndex = 1;
+            lblServerLabel.Text = "Server";
+            // 
+            // lblDbUrlLabel
+            // 
+            lblDbUrlLabel.Location = new Point(16, 44);
+            lblDbUrlLabel.Name = "lblDbUrlLabel";
+            lblDbUrlLabel.Size = new Size(80, 20);
+            lblDbUrlLabel.TabIndex = 0;
+            lblDbUrlLabel.Text = "DB URL";
+            // 
+            // lblNetworkTitle
+            // 
+            lblNetworkTitle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblNetworkTitle.Location = new Point(16, 12);
+            lblNetworkTitle.Name = "lblNetworkTitle";
+            lblNetworkTitle.Size = new Size(200, 24);
+            lblNetworkTitle.TabIndex = 10;
+            lblNetworkTitle.Text = "NETWORK TELEMETRY";
+            // 
+            // progressBar
+            // 
+            progressBar.Location = new Point(24, 425);
+            progressBar.Name = "progressBar";
+            progressBar.Radius = 8;
+            progressBar.Size = new Size(836, 16);
+            progressBar.TabIndex = 6;
+            progressBar.Visible = false;
+            // 
+            // lblStatus
+            // 
+            lblStatus.Location = new Point(24, 447);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(300, 20);
+            lblStatus.TabIndex = 7;
+            lblStatus.Text = "Status";
+            lblStatus.Visible = false;
+            // 
+            // btnRefresh
+            // 
+            btnRefresh.Location = new Point(24, 471);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(120, 36);
+            btnRefresh.TabIndex = 8;
+            btnRefresh.Text = "SYNC DATA";
+            btnRefresh.Type = AntdUI.TTypeMini.Primary;
+            // 
+            // btnOpenFolder
+            // 
+            btnOpenFolder.Location = new Point(152, 471);
+            btnOpenFolder.Name = "btnOpenFolder";
+            btnOpenFolder.Size = new Size(140, 36);
+            btnOpenFolder.TabIndex = 9;
+            btnOpenFolder.Text = "OPEN DIRECTORY";
+            btnOpenFolder.Type = AntdUI.TTypeMini.Primary;
+            // 
+            // btnLaunchApp
+            // 
+            btnLaunchApp.Enabled = false;
+            btnLaunchApp.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnLaunchApp.Location = new Point(710, 467);
+            btnLaunchApp.Name = "btnLaunchApp";
+            btnLaunchApp.Size = new Size(150, 44);
+            btnLaunchApp.TabIndex = 10;
+            btnLaunchApp.Text = "INITIALIZE APP";
+            btnLaunchApp.Type = AntdUI.TTypeMini.Primary;
+            // 
+            // panelConfig
+            // 
+            panelConfig.BorderWidth = 1F;
+            panelConfig.Controls.Add(btnBrowseBuild);
+            panelConfig.Controls.Add(txtBuildPath);
+            panelConfig.Controls.Add(lblBuildPathLabel);
+            panelConfig.Location = new Point(24, 60);
+            panelConfig.Name = "panelConfig";
+            panelConfig.Radius = 8;
+            panelConfig.Size = new Size(420, 165);
+            panelConfig.TabIndex = 2;
+            // 
+            // panelUpdate
+            // 
+            panelUpdate.BorderWidth = 1F;
+            panelUpdate.Controls.Add(btnUpdate);
+            panelUpdate.Controls.Add(btnBrowseZip);
+            panelUpdate.Controls.Add(txtZipPath);
+            panelUpdate.Controls.Add(lblZipPathLabel);
+            panelUpdate.Location = new Point(24, 240);
+            panelUpdate.Name = "panelUpdate";
+            panelUpdate.Radius = 8;
+            panelUpdate.Size = new Size(420, 165);
+            panelUpdate.TabIndex = 3;
+            // 
+            // panelInfo
+            // 
+            panelInfo.BorderWidth = 1F;
+            panelInfo.Controls.Add(lblBuildDateValue);
+            panelInfo.Controls.Add(lblVersionValue);
+            panelInfo.Controls.Add(lblGameNameValue);
+            panelInfo.Controls.Add(lblBuildDateLabel);
+            panelInfo.Controls.Add(lblVersionLabel);
+            panelInfo.Controls.Add(lblGameNameLabel);
+            panelInfo.Controls.Add(lblBuildInfoTitle);
+            panelInfo.Location = new Point(460, 60);
+            panelInfo.Name = "panelInfo";
+            panelInfo.Radius = 8;
+            panelInfo.Size = new Size(400, 165);
+            panelInfo.TabIndex = 4;
+            // 
+            // panelNetwork
+            // 
+            panelNetwork.BorderWidth = 1F;
+            panelNetwork.Controls.Add(lblApiValue);
+            panelNetwork.Controls.Add(lblDebugValue);
+            panelNetwork.Controls.Add(lblPortValue);
+            panelNetwork.Controls.Add(lblServerValue);
+            panelNetwork.Controls.Add(lblDbUrlValue);
+            panelNetwork.Controls.Add(lblApiLabel);
+            panelNetwork.Controls.Add(lblDebugLabel);
+            panelNetwork.Controls.Add(lblPortLabel);
+            panelNetwork.Controls.Add(lblServerLabel);
+            panelNetwork.Controls.Add(lblDbUrlLabel);
+            panelNetwork.Controls.Add(lblNetworkTitle);
+            panelNetwork.Location = new Point(460, 240);
+            panelNetwork.Name = "panelNetwork";
+            panelNetwork.Radius = 8;
+            panelNetwork.Size = new Size(400, 165);
+            panelNetwork.TabIndex = 5;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(18, 18, 18);
+            ClientSize = new Size(884, 540);
+            Controls.Add(btnLaunchApp);
+            Controls.Add(btnOpenFolder);
+            Controls.Add(btnRefresh);
+            Controls.Add(lblStatus);
+            Controls.Add(progressBar);
+            Controls.Add(panelNetwork);
+            Controls.Add(panelInfo);
+            Controls.Add(panelUpdate);
+            Controls.Add(panelConfig);
+            Controls.Add(windowBar);
             MaximizeBox = false;
-            BackColor = ThemeColors.BackgroundDark;
-            ForeColor = ThemeColors.TextPrimary;
-            DoubleBuffered = true;
-            Font = ThemeColors.FontBody;
-
-            int margin = 16;
-            int leftColX = margin;
-            int leftColWidth = 426;
-            int rightColX = leftColX + leftColWidth + margin;
-            int rightColWidth = 426;
-
-            // ═══════════════════════════════════════════════════════════
-            //  HEADER
-            // ═══════════════════════════════════════════════════════════
-            pnlHeader = new Panel
-            {
-                Location = new Point(0, 0),
-                Size = new Size(900, 70),
-                BackColor = ThemeColors.BackgroundMain,
-            };
-
-            lblTitle = new Label
-            {
-                Text = "🚀  VMT VR Launcher",
-                Font = ThemeColors.FontTitle,
-                ForeColor = ThemeColors.TextHighlight,
-                AutoSize = true,
-                Location = new Point(margin + 4, 12),
-                BackColor = Color.Transparent,
-            };
-
-            lblSubtitle = new Label
-            {
-                Text = "Unity Build Version Manager",
-                Font = ThemeColors.FontSubtitle,
-                ForeColor = ThemeColors.TextMuted,
-                AutoSize = true,
-                Location = new Point(margin + 8, 44),
-                BackColor = Color.Transparent,
-            };
-
-            lblGameName = new Label
-            {
-                Text = "",
-                Font = ThemeColors.FontVersion,
-                ForeColor = ThemeColors.AccentBlue,
-                AutoSize = true,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right,
-                Location = new Point(650, 22),
-                BackColor = Color.Transparent,
-                TextAlign = ContentAlignment.MiddleRight,
-            };
-
-            pnlHeader.Controls.AddRange([lblTitle, lblSubtitle, lblGameName]);
-
-            // ═══════════════════════════════════════════════════════════
-            //  LEFT COLUMN — BUILD CONFIGURATION
-            // ═══════════════════════════════════════════════════════════
-            int leftY = pnlHeader.Bottom + margin;
-
-            pnlConfig = new ThemedPanel
-            {
-                Location = new Point(leftColX, leftY),
-                Size = new Size(leftColWidth, 120),
-            };
-
-            lblConfigTitle = new Label
-            {
-                Text = "📁  BUILD CONFIGURATION",
-                Font = ThemeColors.FontSectionTitle,
-                ForeColor = ThemeColors.AccentBlue,
-                AutoSize = true,
-                Location = new Point(16, 14),
-                BackColor = Color.Transparent,
-            };
-
-            lblBuildPathLabel = new Label
-            {
-                Text = "Build Directory",
-                Font = ThemeColors.FontSmall,
-                ForeColor = ThemeColors.TextSecondary,
-                AutoSize = true,
-                Location = new Point(16, 48),
-                BackColor = Color.Transparent,
-            };
-
-            txtBuildPath = new TextBox
-            {
-                Location = new Point(16, 70),
-                Size = new Size(leftColWidth - 116, 28),
-                BackColor = ThemeColors.BackgroundInput,
-                ForeColor = ThemeColors.TextPrimary,
-                BorderStyle = BorderStyle.FixedSingle,
-                Font = ThemeColors.FontBody,
-                ReadOnly = true,
-            };
-
-            btnBrowseBuild = new ThemedButton
-            {
-                Text = "Browse",
-                Icon = "📂",
-                Style = ThemedButton.ButtonStyle.Secondary,
-                Location = new Point(leftColWidth - 94, 68),
-                Size = new Size(78, 32),
-            };
-
-            pnlConfig.Controls.AddRange([lblConfigTitle, lblBuildPathLabel, txtBuildPath, btnBrowseBuild]);
-
-            // ═══════════════════════════════════════════════════════════
-            //  LEFT COLUMN — UPDATE BUILD
-            // ═══════════════════════════════════════════════════════════
-            int updateY = pnlConfig.Bottom + margin;
-
-            pnlUpdate = new ThemedPanel
-            {
-                Location = new Point(leftColX, updateY),
-                Size = new Size(leftColWidth, 200),
-            };
-
-            lblUpdateTitle = new Label
-            {
-                Text = "📦  UPDATE BUILD",
-                Font = ThemeColors.FontSectionTitle,
-                ForeColor = ThemeColors.AccentBlue,
-                AutoSize = true,
-                Location = new Point(16, 14),
-                BackColor = Color.Transparent,
-            };
-
-            lblZipPathLabel = new Label
-            {
-                Text = "Select Update Package (.zip)",
-                Font = ThemeColors.FontSmall,
-                ForeColor = ThemeColors.TextSecondary,
-                AutoSize = true,
-                Location = new Point(16, 48),
-                BackColor = Color.Transparent,
-            };
-
-            txtZipPath = new TextBox
-            {
-                Location = new Point(16, 70),
-                Size = new Size(leftColWidth - 116, 28),
-                BackColor = ThemeColors.BackgroundInput,
-                ForeColor = ThemeColors.TextPrimary,
-                BorderStyle = BorderStyle.FixedSingle,
-                Font = ThemeColors.FontBody,
-                ReadOnly = true,
-            };
-
-            btnBrowseZip = new ThemedButton
-            {
-                Text = "Browse",
-                Icon = "📄",
-                Style = ThemedButton.ButtonStyle.Secondary,
-                Location = new Point(leftColWidth - 94, 68),
-                Size = new Size(78, 32),
-            };
-
-            btnUpdate = new ThemedButton
-            {
-                Text = "UPDATE BUILD",
-                Icon = "⬆",
-                Style = ThemedButton.ButtonStyle.Primary,
-                Location = new Point(16, 116),
-                Size = new Size(leftColWidth - 32, 40),
-                Enabled = false,
-            };
-
-            // Info label about preservation
-            var lblPreserveInfo = new Label
-            {
-                Text = "ℹ  StreamingAssets data (DataSave, configs) will be preserved",
-                Font = ThemeColors.FontSmall,
-                ForeColor = ThemeColors.TextMuted,
-                AutoSize = true,
-                Location = new Point(16, 166),
-                BackColor = Color.Transparent,
-            };
-
-            pnlUpdate.Controls.AddRange([lblUpdateTitle, lblZipPathLabel, txtZipPath, btnBrowseZip, btnUpdate, lblPreserveInfo]);
-
-            // ═══════════════════════════════════════════════════════════
-            //  RIGHT COLUMN — BUILD INFORMATION
-            // ═══════════════════════════════════════════════════════════
-
-            pnlBuildInfo = new ThemedPanel
-            {
-                Location = new Point(rightColX, leftY),
-                Size = new Size(rightColWidth, 140),
-            };
-
-            lblBuildInfoTitle = new Label
-            {
-                Text = "🔧  BUILD INFORMATION",
-                Font = ThemeColors.FontSectionTitle,
-                ForeColor = ThemeColors.AccentBlue,
-                AutoSize = true,
-                Location = new Point(16, 14),
-                BackColor = Color.Transparent,
-            };
-
-            int infoRowY = 50;
-            int infoRowH = 28;
-            int labelW = 90;
-            int valueX = labelW + 16;
-
-            lblGameNameLabel = CreateInfoLabel("Game Name", 16, infoRowY);
-            lblGameNameValue = CreateInfoValue("—", valueX, infoRowY);
-            infoRowY += infoRowH;
-
-            lblVersionLabel = CreateInfoLabel("Version", 16, infoRowY);
-            lblVersionValue = CreateInfoValue("—", valueX, infoRowY);
-            lblVersionValue.ForeColor = ThemeColors.AccentGreen;
-            lblVersionValue.Font = ThemeColors.FontVersion;
-            infoRowY += infoRowH;
-
-            lblBuildDateLabel = CreateInfoLabel("Build Date", 16, infoRowY);
-            lblBuildDateValue = CreateInfoValue("—", valueX, infoRowY);
-
-            pnlBuildInfo.Controls.AddRange([
-                lblBuildInfoTitle,
-                lblGameNameLabel, lblGameNameValue,
-                lblVersionLabel, lblVersionValue,
-                lblBuildDateLabel, lblBuildDateValue
-            ]);
-
-            // ═══════════════════════════════════════════════════════════
-            //  RIGHT COLUMN — NETWORK DATA
-            // ═══════════════════════════════════════════════════════════
-            int netY = pnlBuildInfo.Bottom + margin;
-
-            pnlNetworkData = new ThemedPanel
-            {
-                Location = new Point(rightColX, netY),
-                Size = new Size(rightColWidth, 180),
-            };
-
-            lblNetworkTitle = new Label
-            {
-                Text = "🌐  NETWORK DATA",
-                Font = ThemeColors.FontSectionTitle,
-                ForeColor = ThemeColors.AccentBlue,
-                AutoSize = true,
-                Location = new Point(16, 14),
-                BackColor = Color.Transparent,
-            };
-
-            int netRowY = 46;
-            int netRowH = 26;
-
-            lblDbUrlLabel = CreateInfoLabel("Database URL", 16, netRowY);
-            lblDbUrlValue = CreateInfoValue("—", valueX, netRowY);
-            lblDbUrlValue.MaximumSize = new Size(rightColWidth - valueX - 16, 0);
-            lblDbUrlValue.AutoEllipsis = true;
-            netRowY += netRowH;
-
-            lblServerLabel = CreateInfoLabel("Server", 16, netRowY);
-            lblServerValue = CreateInfoValue("—", valueX, netRowY);
-            netRowY += netRowH;
-
-            lblPortLabel = CreateInfoLabel("Port", 16, netRowY);
-            lblPortValue = CreateInfoValue("—", valueX, netRowY);
-            netRowY += netRowH;
-
-            lblDebugLabel = CreateInfoLabel("Debug Mode", 16, netRowY);
-            lblDebugValue = CreateInfoValue("—", valueX, netRowY);
-            netRowY += netRowH;
-
-            lblApiLabel = CreateInfoLabel("API Mode", 16, netRowY);
-            lblApiValue = CreateInfoValue("—", valueX, netRowY);
-
-            pnlNetworkData.Controls.AddRange([
-                lblNetworkTitle,
-                lblDbUrlLabel, lblDbUrlValue,
-                lblServerLabel, lblServerValue,
-                lblPortLabel, lblPortValue,
-                lblDebugLabel, lblDebugValue,
-                lblApiLabel, lblApiValue
-            ]);
-
-            // ═══════════════════════════════════════════════════════════
-            //  BOTTOM — PROGRESS BAR
-            // ═══════════════════════════════════════════════════════════
-            int progressY = 480;
-
-            progressBar = new ThemedProgressBar
-            {
-                Location = new Point(margin, progressY),
-                Size = new Size(900 - margin * 2, 28),
-                Visible = false,
-            };
-
-            lblStatus = new Label
-            {
-                Text = "",
-                Font = ThemeColors.FontSmall,
-                ForeColor = ThemeColors.TextSecondary,
-                AutoSize = true,
-                Location = new Point(margin, progressY + 34),
-                BackColor = Color.Transparent,
-                Visible = false,
-            };
-
-            // ═══════════════════════════════════════════════════════════
-            //  BOTTOM — ACTION BUTTONS
-            // ═══════════════════════════════════════════════════════════
-            int actionsY = 540;
-
-            pnlActions = new Panel
-            {
-                Location = new Point(margin, actionsY),
-                Size = new Size(900 - margin * 2, 50),
-                BackColor = Color.Transparent,
-            };
-
-            btnRefresh = new ThemedButton
-            {
-                Text = "Refresh",
-                Icon = "🔄",
-                Style = ThemedButton.ButtonStyle.Secondary,
-                Location = new Point(0, 4),
-                Size = new Size(120, 40),
-            };
-
-            btnOpenFolder = new ThemedButton
-            {
-                Text = "Open Folder",
-                Icon = "📂",
-                Style = ThemedButton.ButtonStyle.Secondary,
-                Location = new Point(130, 4),
-                Size = new Size(140, 40),
-            };
-
-            btnLaunchApp = new ThemedButton
-            {
-                Text = "Launch App",
-                Icon = "🚀",
-                Style = ThemedButton.ButtonStyle.Success,
-                Location = new Point(900 - margin * 2 - 180, 4),
-                Size = new Size(180, 40),
-            };
-
-            pnlActions.Controls.AddRange([btnRefresh, btnOpenFolder, btnLaunchApp]);
-
-            // ═══════════════════════════════════════════════════════════
-            //  ADD ALL TO FORM
-            // ═══════════════════════════════════════════════════════════
-            Controls.AddRange([
-                pnlHeader,
-                pnlConfig,
-                pnlUpdate,
-                pnlBuildInfo,
-                pnlNetworkData,
-                progressBar,
-                lblStatus,
-                pnlActions
-            ]);
-
+            Resizable = false;
+            Name = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "VR Launcher";
+            panelConfig.ResumeLayout(false);
+            panelUpdate.ResumeLayout(false);
+            panelInfo.ResumeLayout(false);
+            panelNetwork.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
-        }
-
-        // ─── Helper: Create Info Row Labels ──────────────────────────
-
-        private static Label CreateInfoLabel(string text, int x, int y)
-        {
-            return new Label
-            {
-                Text = text,
-                Font = ThemeColors.FontSmall,
-                ForeColor = ThemeColors.TextMuted,
-                AutoSize = true,
-                Location = new Point(x, y),
-                BackColor = Color.Transparent,
-            };
-        }
-
-        private static Label CreateInfoValue(string text, int x, int y)
-        {
-            return new Label
-            {
-                Text = text,
-                Font = ThemeColors.FontInfoValue,
-                ForeColor = ThemeColors.TextPrimary,
-                AutoSize = true,
-                Location = new Point(x, y),
-                BackColor = Color.Transparent,
-            };
         }
 
         #endregion
+
+        private AntdUI.WindowBar windowBar;
+        private AntdUI.Panel panelConfig;
+        private AntdUI.Button btnBrowseBuild;
+        private AntdUI.Input txtBuildPath;
+        private AntdUI.Label lblBuildPathLabel;
+        private AntdUI.Panel panelUpdate;
+        private AntdUI.Button btnUpdate;
+        private AntdUI.Button btnBrowseZip;
+        private AntdUI.Input txtZipPath;
+        private AntdUI.Label lblZipPathLabel;
+        private AntdUI.Panel panelInfo;
+        private AntdUI.Label lblBuildInfoTitle;
+        private AntdUI.Label lblBuildDateValue;
+        private AntdUI.Label lblVersionValue;
+        private AntdUI.Label lblGameNameValue;
+        private AntdUI.Label lblBuildDateLabel;
+        private AntdUI.Label lblVersionLabel;
+        private AntdUI.Label lblGameNameLabel;
+        private AntdUI.Panel panelNetwork;
+        private AntdUI.Label lblNetworkTitle;
+        private AntdUI.Label lblApiValue;
+        private AntdUI.Label lblDebugValue;
+        private AntdUI.Label lblPortValue;
+        private AntdUI.Label lblServerValue;
+        private AntdUI.Label lblDbUrlValue;
+        private AntdUI.Label lblApiLabel;
+        private AntdUI.Label lblDebugLabel;
+        private AntdUI.Label lblPortLabel;
+        private AntdUI.Label lblServerLabel;
+        private AntdUI.Label lblDbUrlLabel;
+        private AntdUI.Progress progressBar;
+        private AntdUI.Label lblStatus;
+        private AntdUI.Button btnRefresh;
+        private AntdUI.Button btnOpenFolder;
+        private AntdUI.Button btnLaunchApp;
     }
 }

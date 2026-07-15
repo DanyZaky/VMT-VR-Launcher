@@ -1,5 +1,6 @@
 using System.Diagnostics;
-using System.IO.Compression;
+using SharpCompress.Archives;
+using SharpCompress.Common;
 using System.Text.Json;
 using VMT_VR_Launcher.Models;
 
@@ -135,10 +136,10 @@ namespace VMT_VR_Launcher
         {
             try
             {
-                using var archive = ZipFile.OpenRead(zipPath);
+                using var archive = ArchiveFactory.Open(zipPath);
                 // Check for at least one *_Data folder entry
                 bool hasDataFolder = archive.Entries.Any(e =>
-                    e.FullName.Contains("_Data/") || e.FullName.Contains("_Data\\"));
+                    e.Key != null && (e.Key.Contains("_Data/") || e.Key.Contains("_Data\\")));
                 return hasDataFolder;
             }
             catch
@@ -210,30 +211,33 @@ namespace VMT_VR_Launcher
 
             await Task.Run(() =>
             {
-                using var archive = ZipFile.OpenRead(zipPath);
-                int totalEntries = archive.Entries.Count;
+                using var archive = ArchiveFactory.Open(zipPath);
+                var entriesList = archive.Entries.ToList();
+                int totalEntries = entriesList.Count;
                 int processed = 0;
 
-                foreach (var entry in archive.Entries)
+                foreach (var entry in entriesList)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    string destinationPath = Path.Combine(buildPath, entry.FullName);
+                    if (string.IsNullOrEmpty(entry.Key)) continue;
+
+                    string destinationPath = Path.Combine(buildPath, entry.Key.Replace('/', Path.DirectorySeparatorChar));
 
                     // Ensure directory exists
                     string? dirPath = Path.GetDirectoryName(destinationPath);
                     if (dirPath != null && !Directory.Exists(dirPath))
                         Directory.CreateDirectory(dirPath);
 
-                    // Skip directories (entries ending with / or \)
-                    if (string.IsNullOrEmpty(entry.Name))
+                    // Skip directories
+                    if (entry.IsDirectory)
                     {
                         processed++;
                         continue;
                     }
 
                     // Extract file (overwrite)
-                    entry.ExtractToFile(destinationPath, overwrite: true);
+                    entry.WriteToFile(destinationPath, new ExtractionOptions { Overwrite = true });
 
                     processed++;
                     int pct = 20 + (int)(60.0 * processed / totalEntries);
