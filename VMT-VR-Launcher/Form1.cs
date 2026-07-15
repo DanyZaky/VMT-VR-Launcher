@@ -20,6 +20,7 @@ namespace VMT_VR_Launcher
         {
             AntdUI.Config.IsDark = true;
             InitializeComponent();
+            try { this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath); } catch { }
             LoadSettings();
             WireEvents();
             RefreshUI();
