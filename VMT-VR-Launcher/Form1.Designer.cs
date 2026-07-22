@@ -34,11 +34,13 @@ namespace VMT_VR_Launcher
             lblVersionLabel = new AntdUI.Label();
             lblGameNameLabel = new AntdUI.Label();
             lblBuildInfoTitle = new AntdUI.Label();
-            lblApiValue = new AntdUI.Label();
-            lblDebugValue = new AntdUI.Label();
-            lblPortValue = new AntdUI.Label();
-            lblServerValue = new AntdUI.Label();
-            lblDbUrlValue = new AntdUI.Label();
+            btnApplyNetwork = new AntdUI.Button();
+            btnOpenNetworkJson = new AntdUI.Button();
+            txtDbUrl = new AntdUI.Input();
+            txtServer = new AntdUI.Input();
+            txtPort = new AntdUI.Input();
+            swDebug = new AntdUI.Switch();
+            swApi = new AntdUI.Switch();
             lblApiLabel = new AntdUI.Label();
             lblDebugLabel = new AntdUI.Label();
             lblPortLabel = new AntdUI.Label();
@@ -83,6 +85,7 @@ namespace VMT_VR_Launcher
             // 
             // txtBuildPath
             // 
+            txtBuildPath.Back = Color.FromArgb(41, 45, 70);
             txtBuildPath.Location = new Point(16, 46);
             txtBuildPath.Name = "txtBuildPath";
             txtBuildPath.ReadOnly = true;
@@ -119,6 +122,7 @@ namespace VMT_VR_Launcher
             // 
             // txtZipPath
             // 
+            txtZipPath.Back = Color.FromArgb(41, 45, 70);
             txtZipPath.Location = new Point(16, 46);
             txtZipPath.Name = "txtZipPath";
             txtZipPath.ReadOnly = true;
@@ -209,76 +213,94 @@ namespace VMT_VR_Launcher
             lblBuildInfoTitle.TabIndex = 6;
             lblBuildInfoTitle.Text = "BUILD INFORMATION";
             // 
-            // lblApiValue
+            // btnApplyNetwork
             // 
-            lblApiValue.Location = new Point(100, 140);
-            lblApiValue.Name = "lblApiValue";
-            lblApiValue.Size = new Size(280, 20);
-            lblApiValue.TabIndex = 9;
-            lblApiValue.Text = "—";
+            btnApplyNetwork.Location = new Point(310, 10);
+            btnApplyNetwork.Name = "btnApplyNetwork";
+            btnApplyNetwork.Size = new Size(70, 26);
+            btnApplyNetwork.TabIndex = 11;
+            btnApplyNetwork.Text = "APPLY";
+            btnApplyNetwork.Type = AntdUI.TTypeMini.Success;
             // 
-            // lblDebugValue
+            // btnOpenNetworkJson
             // 
-            lblDebugValue.Location = new Point(100, 116);
-            lblDebugValue.Name = "lblDebugValue";
-            lblDebugValue.Size = new Size(280, 20);
-            lblDebugValue.TabIndex = 8;
-            lblDebugValue.Text = "—";
+            btnOpenNetworkJson.Location = new Point(230, 10);
+            btnOpenNetworkJson.Name = "btnOpenNetworkJson";
+            btnOpenNetworkJson.Size = new Size(70, 26);
+            btnOpenNetworkJson.TabIndex = 12;
+            btnOpenNetworkJson.Text = "OPEN";
+            btnOpenNetworkJson.Type = AntdUI.TTypeMini.Default;
             // 
-            // lblPortValue
+            // swApi
             // 
-            lblPortValue.Location = new Point(100, 92);
-            lblPortValue.Name = "lblPortValue";
-            lblPortValue.Size = new Size(280, 20);
-            lblPortValue.TabIndex = 7;
-            lblPortValue.Text = "—";
+            swApi.Location = new Point(280, 124);
+            swApi.Name = "swApi";
+            swApi.Size = new Size(50, 20);
+            swApi.TabIndex = 10;
+            swApi.Text = "API";
             // 
-            // lblServerValue
+            // swDebug
             // 
-            lblServerValue.Location = new Point(100, 68);
-            lblServerValue.Name = "lblServerValue";
-            lblServerValue.Size = new Size(280, 20);
-            lblServerValue.TabIndex = 6;
-            lblServerValue.Text = "—";
+            swDebug.Location = new Point(80, 124);
+            swDebug.Name = "swDebug";
+            swDebug.Size = new Size(50, 20);
+            swDebug.TabIndex = 9;
+            swDebug.Text = "Debug";
             // 
-            // lblDbUrlValue
+            // txtPort
             // 
-            lblDbUrlValue.Location = new Point(100, 44);
-            lblDbUrlValue.Name = "lblDbUrlValue";
-            lblDbUrlValue.Size = new Size(280, 20);
-            lblDbUrlValue.TabIndex = 5;
-            lblDbUrlValue.Text = "—";
+            txtPort.Back = Color.FromArgb(41, 45, 70);
+            txtPort.Location = new Point(270, 80);
+            txtPort.Name = "txtPort";
+            txtPort.Size = new Size(110, 30);
+            txtPort.TabIndex = 8;
+            // 
+            // txtServer
+            // 
+            txtServer.Back = Color.FromArgb(41, 45, 70);
+            txtServer.Location = new Point(80, 80);
+            txtServer.Name = "txtServer";
+            txtServer.Size = new Size(130, 30);
+            txtServer.TabIndex = 7;
+            // 
+            // txtDbUrl
+            // 
+            txtDbUrl.Back = Color.FromArgb(41, 45, 70);
+            txtDbUrl.Location = new Point(100, 40);
+            txtDbUrl.Name = "txtDbUrl";
+            txtDbUrl.Size = new Size(280, 30);
+            txtDbUrl.TabIndex = 6;
             // 
             // lblApiLabel
             // 
-            lblApiLabel.Location = new Point(16, 140);
+            lblApiLabel.Location = new Point(220, 124);
             lblApiLabel.Name = "lblApiLabel";
-            lblApiLabel.Size = new Size(80, 20);
-            lblApiLabel.TabIndex = 4;
+            lblApiLabel.Size = new Size(60, 20);
+            lblApiLabel.TabIndex = 5;
             lblApiLabel.Text = "API Mode";
             // 
             // lblDebugLabel
             // 
-            lblDebugLabel.Location = new Point(16, 116);
+            lblDebugLabel.Location = new Point(16, 124);
             lblDebugLabel.Name = "lblDebugLabel";
-            lblDebugLabel.Size = new Size(80, 20);
-            lblDebugLabel.TabIndex = 3;
+            lblDebugLabel.Size = new Size(60, 20);
+            lblDebugLabel.TabIndex = 4;
             lblDebugLabel.Text = "Debug";
             // 
             // lblPortLabel
             // 
-            lblPortLabel.Location = new Point(16, 92);
+            lblPortLabel.Location = new Point(220, 84);
             lblPortLabel.Name = "lblPortLabel";
-            lblPortLabel.Size = new Size(80, 20);
-            lblPortLabel.TabIndex = 2;
+            lblPortLabel.Size = new Size(40, 20);
+            lblPortLabel.TabIndex = 3;
             lblPortLabel.Text = "Port";
             // 
             // lblServerLabel
             // 
-            lblServerLabel.Location = new Point(16, 68);
+            lblServerLabel.Location = new Point(16, 84);
             lblServerLabel.Name = "lblServerLabel";
-            lblServerLabel.Size = new Size(80, 20);
-            lblServerLabel.TabIndex = 1;
+            lblServerLabel.Size = new Size(60, 20);
+            lblServerLabel.TabIndex = 2;
             lblServerLabel.Text = "Server";
             // 
             // lblDbUrlLabel
@@ -347,6 +369,7 @@ namespace VMT_VR_Launcher
             // 
             // panelConfig
             // 
+            panelConfig.Back = Color.FromArgb(52, 57, 89);
             panelConfig.BorderWidth = 1F;
             panelConfig.Controls.Add(btnBrowseBuild);
             panelConfig.Controls.Add(txtBuildPath);
@@ -359,6 +382,7 @@ namespace VMT_VR_Launcher
             // 
             // panelUpdate
             // 
+            panelUpdate.Back = Color.FromArgb(52, 57, 89);
             panelUpdate.BorderWidth = 1F;
             panelUpdate.Controls.Add(btnUpdate);
             panelUpdate.Controls.Add(btnBrowseZip);
@@ -372,6 +396,7 @@ namespace VMT_VR_Launcher
             // 
             // panelInfo
             // 
+            panelInfo.Back = Color.FromArgb(52, 57, 89);
             panelInfo.BorderWidth = 1F;
             panelInfo.Controls.Add(lblVmtCountValue);
             panelInfo.Controls.Add(lblVmtCountLabel);
@@ -390,12 +415,15 @@ namespace VMT_VR_Launcher
             // 
             // panelNetwork
             // 
+            panelNetwork.Back = Color.FromArgb(52, 57, 89);
             panelNetwork.BorderWidth = 1F;
-            panelNetwork.Controls.Add(lblApiValue);
-            panelNetwork.Controls.Add(lblDebugValue);
-            panelNetwork.Controls.Add(lblPortValue);
-            panelNetwork.Controls.Add(lblServerValue);
-            panelNetwork.Controls.Add(lblDbUrlValue);
+            panelNetwork.Controls.Add(btnApplyNetwork);
+            panelNetwork.Controls.Add(btnOpenNetworkJson);
+            panelNetwork.Controls.Add(txtDbUrl);
+            panelNetwork.Controls.Add(txtServer);
+            panelNetwork.Controls.Add(txtPort);
+            panelNetwork.Controls.Add(swDebug);
+            panelNetwork.Controls.Add(swApi);
             panelNetwork.Controls.Add(lblApiLabel);
             panelNetwork.Controls.Add(lblDebugLabel);
             panelNetwork.Controls.Add(lblPortLabel);
@@ -412,8 +440,8 @@ namespace VMT_VR_Launcher
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(18, 18, 18);
-            ClientSize = new Size(884, 540);
+            BackColor = Color.FromArgb(41, 45, 70);
+            ClientSize = new Size(884, 505);
             Controls.Add(btnLaunchApp);
             Controls.Add(btnOpenFolder);
             Controls.Add(btnRefresh);
@@ -425,8 +453,8 @@ namespace VMT_VR_Launcher
             Controls.Add(panelConfig);
             Controls.Add(windowBar);
             MaximizeBox = false;
-            Resizable = false;
             Name = "Form1";
+            Resizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "VR Launcher";
             panelConfig.ResumeLayout(false);
@@ -460,11 +488,13 @@ namespace VMT_VR_Launcher
         private AntdUI.Label lblVmtCountLabel;
         private AntdUI.Panel panelNetwork;
         private AntdUI.Label lblNetworkTitle;
-        private AntdUI.Label lblApiValue;
-        private AntdUI.Label lblDebugValue;
-        private AntdUI.Label lblPortValue;
-        private AntdUI.Label lblServerValue;
-        private AntdUI.Label lblDbUrlValue;
+        private AntdUI.Button btnApplyNetwork;
+        private AntdUI.Button btnOpenNetworkJson;
+        private AntdUI.Input txtDbUrl;
+        private AntdUI.Input txtServer;
+        private AntdUI.Input txtPort;
+        private AntdUI.Switch swDebug;
+        private AntdUI.Switch swApi;
         private AntdUI.Label lblApiLabel;
         private AntdUI.Label lblDebugLabel;
         private AntdUI.Label lblPortLabel;

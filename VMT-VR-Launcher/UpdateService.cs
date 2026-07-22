@@ -125,6 +125,28 @@ namespace VMT_VR_Launcher
             }
         }
 
+        /// <summary>
+        /// Saves NetworkData back to StreamingAssets/NetworkData.json.
+        /// </summary>
+        public static void SaveNetworkData(string buildPath, NetworkData data)
+        {
+            var saPath = FindStreamingAssetsPath(buildPath);
+            if (saPath == null) return;
+
+            string jsonPath = Path.Combine(saPath, "NetworkData.json");
+            try
+            {
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                string json = JsonSerializer.Serialize(data, options);
+                File.WriteAllText(jsonPath, json);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[UpdateService] Failed to save NetworkData.json: {ex.Message}");
+                throw;
+            }
+        }
+
         // ═══════════════════════════════════════════════════════════════
         //  UPDATE PROCESS
         // ═══════════════════════════════════════════════════════════════
@@ -137,15 +159,41 @@ namespace VMT_VR_Launcher
             try
             {
                 using var archive = ArchiveFactory.Open(zipPath);
-                // Check for at least one *_Data folder entry
-                bool hasDataFolder = archive.Entries.Any(e =>
-                    e.Key != null && (e.Key.Contains("_Data/") || e.Key.Contains("_Data\\")));
-                return hasDataFolder;
+                return FindGameRootPrefix(archive) != null;
             }
             catch
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Finds the root folder prefix inside the archive that contains the game.
+        /// Useful if the developer packed the game inside a parent folder.
+        /// </summary>
+        private static string? FindGameRootPrefix(SharpCompress.Archives.IArchive archive)
+        {
+            var exeEntries = archive.Entries
+                .Where(e => e.Key != null && e.Key.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            foreach (var exeEntry in exeEntries)
+            {
+                string key = exeEntry.Key.Replace('\\', '/');
+                int lastSlash = key.LastIndexOf('/');
+                string prefix = lastSlash >= 0 ? key.Substring(0, lastSlash + 1) : "";
+
+                bool hasData = archive.Entries.Any(e =>
+                    e.Key != null &&
+                    e.Key.Replace('\\', '/').StartsWith(prefix, StringComparison.OrdinalIgnoreCase) &&
+                    e.Key.Contains("_Data/"));
+
+                if (hasData)
+                {
+                    return prefix;
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -210,12 +258,34 @@ namespace VMT_VR_Launcher
             progress?.Report(new UpdateProgress { Percentage = 15, Status = "Backup complete" });
             cancellationToken.ThrowIfCancellationRequested();
 
+            // Step 3.5: Wipe old build directory
+            progress?.Report(new UpdateProgress { Percentage = 18, Status = "Clearing old build files..." });
+            try
+            {
+                var di = new DirectoryInfo(buildPath);
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[UpdateService] Failed to wipe build directory: {ex.Message}");
+            }
+
             // Step 4: Extract ZIP to build directory
             progress?.Report(new UpdateProgress { Percentage = 20, Status = "Extracting update..." });
 
             await Task.Run(() =>
             {
                 using var archive = ArchiveFactory.Open(zipPath);
+                
+                string rootPrefix = FindGameRootPrefix(archive) ?? "";
+                
                 var entriesList = archive.Entries.ToList();
                 int totalEntries = entriesList.Count;
                 int processed = 0;
@@ -226,7 +296,22 @@ namespace VMT_VR_Launcher
 
                     if (string.IsNullOrEmpty(entry.Key)) continue;
 
-                    string destinationPath = Path.Combine(buildPath, entry.Key.Replace('/', Path.DirectorySeparatorChar));
+                    string normalizedKey = entry.Key.Replace('\\', '/');
+
+                    if (!normalizedKey.StartsWith(rootPrefix, StringComparison.OrdinalIgnoreCase))
+                    {
+                        processed++;
+                        continue;
+                    }
+
+                    string relativePath = normalizedKey.Substring(rootPrefix.Length);
+                    if (string.IsNullOrEmpty(relativePath))
+                    {
+                        processed++;
+                        continue; // Skip the root folder itself
+                    }
+
+                    string destinationPath = Path.Combine(buildPath, relativePath.Replace('/', Path.DirectorySeparatorChar));
 
                     // Ensure directory exists
                     string? dirPath = Path.GetDirectoryName(destinationPath);
@@ -324,11 +409,8 @@ namespace VMT_VR_Launcher
             foreach (string file in Directory.GetFiles(sourceDir))
             {
                 string destFile = Path.Combine(destDir, Path.GetFileName(file));
-                if (!File.Exists(destFile))
-                {
-                    File.Copy(file, destFile);
-                    Debug.WriteLine($"[UpdateService] Restored: {Path.GetFileName(file)}");
-                }
+                File.Copy(file, destFile, true); // Overwrite with backup data
+                Debug.WriteLine($"[UpdateService] Restored: {Path.GetFileName(file)}");
             }
 
             foreach (string dir in Directory.GetDirectories(sourceDir))

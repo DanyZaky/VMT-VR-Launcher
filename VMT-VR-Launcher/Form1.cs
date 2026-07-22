@@ -54,6 +54,8 @@ namespace VMT_VR_Launcher
             btnRefresh.Click += BtnRefresh_Click;
             btnOpenFolder.Click += BtnOpenFolder_Click;
             btnLaunchApp.Click += BtnLaunchApp_Click;
+            btnApplyNetwork.Click += BtnApplyNetwork_Click;
+            btnOpenNetworkJson.Click += BtnOpenNetworkJson_Click;
 
             // Form closing — save settings
             FormClosing += Form1_FormClosing;
@@ -202,7 +204,7 @@ namespace VMT_VR_Launcher
             RefreshUI();
             // Flash effect to indicate refresh happened
             lblStatus.Visible = true;
-            lblStatus.Text = "🔄  Data refreshed";
+            lblStatus.Text = "✓  Data refreshed";
             lblStatus.ForeColor = Color.LimeGreen;
 
             var timer = new System.Windows.Forms.Timer { Interval = 2000 };
@@ -243,23 +245,19 @@ namespace VMT_VR_Launcher
             _networkData = UpdateService.LoadNetworkData(buildPath);
             if (_networkData != null)
             {
-                lblDbUrlValue.Text = _networkData.DatabaseURL;
-                lblServerValue.Text = _networkData.Server;
-                lblPortValue.Text = _networkData.Port;
-                lblDebugValue.Text = _networkData.IsDebug ? "✓  Enabled" : "✗  Disabled";
-                lblDebugValue.ForeColor = _networkData.IsDebug ? Color.Orange : Color.Gray;
-                lblApiValue.Text = _networkData.IsAPI ? "✓  Enabled" : "✗  Disabled";
-                lblApiValue.ForeColor = _networkData.IsAPI ? Color.LimeGreen : Color.Gray;
+                txtDbUrl.Text = _networkData.DatabaseURL;
+                txtServer.Text = _networkData.Server;
+                txtPort.Text = _networkData.Port;
+                swDebug.Checked = _networkData.IsDebug;
+                swApi.Checked = _networkData.IsAPI;
             }
             else
             {
-                lblDbUrlValue.Text = "—";
-                lblServerValue.Text = "—";
-                lblPortValue.Text = "—";
-                lblDebugValue.Text = "—";
-                lblDebugValue.ForeColor = Color.Gray;
-                lblApiValue.Text = "—";
-                lblApiValue.ForeColor = Color.Gray;
+                txtDbUrl.Text = string.Empty;
+                txtServer.Text = string.Empty;
+                txtPort.Text = string.Empty;
+                swDebug.Checked = false;
+                swApi.Checked = false;
             }
 
             // Load Custom Weapons (.vmt) Count
@@ -306,11 +304,71 @@ namespace VMT_VR_Launcher
             btnUpdate.Enabled = hasBuild && hasZip && !_isUpdating;
             btnOpenFolder.Enabled = hasBuild;
             btnLaunchApp.Enabled = hasBuild && UpdateService.FindGameExecutable(buildPath) != null;
+            
+            // Network edit form
+            btnApplyNetwork.Enabled = hasBuild;
+            btnOpenNetworkJson.Enabled = hasBuild;
+            txtDbUrl.Enabled = hasBuild;
+            txtServer.Enabled = hasBuild;
+            txtPort.Enabled = hasBuild;
+            swDebug.Enabled = hasBuild;
+            swApi.Enabled = hasBuild;
         }
 
         // ═══════════════════════════════════════════════════════════════
         //  ACTION BUTTONS
         // ═══════════════════════════════════════════════════════════════
+
+        private void BtnApplyNetwork_Click(object? sender, EventArgs e)
+        {
+            string buildPath = txtBuildPath.Text.Trim();
+            if (string.IsNullOrWhiteSpace(buildPath) || !Directory.Exists(buildPath)) return;
+
+            var newData = new NetworkData
+            {
+                DatabaseURL = txtDbUrl.Text,
+                Server = txtServer.Text,
+                Port = txtPort.Text,
+                IsDebug = swDebug.Checked,
+                IsAPI = swApi.Checked
+            };
+
+            try
+            {
+                UpdateService.SaveNetworkData(buildPath, newData);
+                ShowSuccess("Network Data saved successfully!");
+                RefreshUI();
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Failed to save Network Data:\n{ex.Message}");
+            }
+        }
+
+        private void BtnOpenNetworkJson_Click(object? sender, EventArgs e)
+        {
+            string buildPath = txtBuildPath.Text.Trim();
+            string? saPath = UpdateService.FindStreamingAssetsPath(buildPath);
+            if (saPath != null)
+            {
+                string jsonPath = Path.Combine(saPath, "NetworkData.json");
+                if (File.Exists(jsonPath))
+                {
+                    try
+                    {
+                        Process.Start("notepad.exe", $"\"{jsonPath}\"");
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowError($"Failed to open NetworkData.json:\n{ex.Message}");
+                    }
+                }
+                else
+                {
+                    ShowError("NetworkData.json not found in StreamingAssets.");
+                }
+            }
+        }
 
         private void BtnOpenFolder_Click(object? sender, EventArgs e)
         {
